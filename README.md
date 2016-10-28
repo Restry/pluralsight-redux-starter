@@ -1,2 +1,1 @@
-# pluralsight-redux-starter
-pluralsight-redux-starter
+# react-starter

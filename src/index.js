@@ -1,29 +1,25 @@
-/* eslint-disable no-console */
+/*eslint-disable import/default */
+import 'babel-polyfill';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { DatePicker, message } from 'antd';
+import { render } from 'react-dom';
+import configureStore from './store/configureStore';
+import {Provider} from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
+import {loadCourses} from './actions/courseActions';
+import {loadAuthors} from './actions/authorActions';
+import './styles/styles.css'; //Webpack can import CSS files too!
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/toastr/build/toastr.min.css';
+import './styles/default.less'
 
+const store = configureStore();
+store.dispatch(loadCourses());
+store.dispatch(loadAuthors());
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: ''
-    };
-  }
-  handleChange(date) {
-    message.info('您选择的日期是: ' + date.toString());
-    this.setState({ date });
-  }
-  render() {
-    return (
-      <div style={{ width: 400, margin: '100px auto' }}>
-        <DatePicker onChange={value => this.handleChange(value)} />
-        <div style={{ marginTop: 20 }}>当前日期：{this.state.date.toString()}</div>
-      </div>
-    );
-  }
-}
-
-ReactDOM.render(<App />, document.getElementById('app'));
-
+render(
+  <Provider store={store}>
+    <Router history={browserHistory} routes={routes} />
+  </Provider>,
+  document.getElementById('app')
+);
