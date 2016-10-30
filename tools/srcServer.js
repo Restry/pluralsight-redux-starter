@@ -4,7 +4,6 @@ import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
 
-
 let mongoose = require('mongoose'),
   bodyParser = require('body-parser'),
   cookieParser = require('cookie-parser'),
